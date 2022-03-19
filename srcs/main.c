@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/19 16:43:16 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/19 17:18:46 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 int	main(void)
 {
-	int		grid_size;
 	void	**windows;
+	t_infos	infos;
 	int		i;
 	int		j;
 	
@@ -24,7 +24,14 @@ int	main(void)
 	cbreak();
 	noecho();
 	clear();
-	grid_size = ft_menu(LINES, COLS);
+
+	/*
+	 * Initialize t_infos
+	 */
+	infos.size = ft_menu(LINES, COLS);
+	infos.grid = malloc(sizeof(int) * infos.size * info.size);
+	infos.score = 0;
+
 	clear();
 	windows = ft_initgrid(grid_size);
 	wgetch(windows[0]);
@@ -38,6 +45,7 @@ int	main(void)
 		}
 		i++;
 	}
+
 	free (windows);
 	endwin();
 }
