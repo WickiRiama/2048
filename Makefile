@@ -6,7 +6,7 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 11:39:02 by mriant            #+#    #+#              #
-#    Updated: 2022/03/19 12:05:16 by mriant           ###   ########.fr        #
+#    Updated: 2022/03/19 14:39:01 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,15 @@ DEPS = ${patsubst srcs/%.c, build/%.d, ${SRCS}}
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 IFLAGS = -I./includes -MMD
-LFLAGS = -lncurses -lncurses_g
+LFLAGS = -lncurses -L./libft -lft
 
-${NAME}: ${OBJS}
+LIBFT = lbft/libft.a
+
+${NAME}: ${LIBFT} ${OBJS}
 	${CC} ${CFLAGS} ${OBJS} -o ${NAME} ${LFLAGS}
+
+${LIBFT}:
+	make -s -C libft
 
 build/%.o: srcs/%.c
 	@mkdir -p build
@@ -37,6 +42,7 @@ clean:
 	rm -rf ${OBJS}
 	rm -rf ${DEPS}
 	rm -rf build
+	make -s -C libft clean
 
 fclean: clean
 	rm -rf ${NAME}
