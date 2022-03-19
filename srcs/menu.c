@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:13:59 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/19 16:40:51 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/19 18:04:57 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_menu(int lines, int cols)
 	return (grid_size);
 }
 
-void	**ft_initgrid(int grid_size)
+void	**ft_initgrid(t_infos infos)
 {
 	int 	box_height;
 	int		box_width;
@@ -44,20 +44,21 @@ void	**ft_initgrid(int grid_size)
 	int		j;
 	void	**windows;
 
-	box_height = LINES / grid_size;
-	box_width = COLS / grid_size;
-	windows = malloc(sizeof(void *) * grid_size * grid_size);
+	box_height = LINES / infos.size;
+	box_width = COLS / infos.size;
+	windows = malloc(sizeof(void *) * infos.size * infos.size);
 	if (!windows)
 		return (NULL);
 	i = 0;
-	while (i < grid_size)
+	while (i < infos.size)
 	{
 		j = 0;
-		while (j < grid_size)
+		while (j < infos.size)
 		{
-			windows[i * grid_size + j] = newwin(box_height, box_width, i * box_height, j * box_width);
-			box(windows[i * grid_size + j], 0, 0);
-			wrefresh(windows[i * grid_size + j]);
+			windows[i * infos.size + j] = newwin(box_height, box_width, i * box_height, j * box_width);
+			mvwprintw(windows[i * infos.size + j], box_height / 2, box_width / 2, "%d\n", infos.grid[i][j]);
+			box(windows[i * infos.size + j], 0, 0);
+			wrefresh(windows[i * infos.size + j]);
 			j++;
 		}
 		i++;

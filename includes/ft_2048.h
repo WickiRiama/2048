@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:45:02 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/19 17:18:51 by dolee            ###   ########.fr       */
+/*   Updated: 2022/03/19 18:00:03 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct	s_infos
 	int		score;
 }				t_infos;
 
+int		ft_add_number(t_infos *infos);
 int		ft_menu(int lines, int cols);
-void	**ft_initgrid(int grid_size);
+void	**ft_initgrid(t_infos infos);
 
 #endif
