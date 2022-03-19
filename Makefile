@@ -6,14 +6,15 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 11:39:02 by mriant            #+#    #+#              #
-#    Updated: 2022/03/19 14:39:01 by mriant           ###   ########.fr        #
+#    Updated: 2022/03/19 14:58:22 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 2048
 
 SRCS = ${addprefix srcs/, \
-	main.c}
+	main.c \
+	menu.c}
 
 OBJS = ${patsubst srcs/%.c, build/%.o, ${SRCS}}
 
@@ -21,10 +22,10 @@ DEPS = ${patsubst srcs/%.c, build/%.d, ${SRCS}}
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-IFLAGS = -I./includes -MMD
+IFLAGS = -I./includes -I./libft -MMD
 LFLAGS = -lncurses -L./libft -lft
 
-LIBFT = lbft/libft.a
+LIBFT = libft/libft.a
 
 ${NAME}: ${LIBFT} ${OBJS}
 	${CC} ${CFLAGS} ${OBJS} -o ${NAME} ${LFLAGS}
