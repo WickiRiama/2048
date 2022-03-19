@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/19 18:53:43 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/19 18:58:38 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	main(void)
 			move_up(&infos);
 		else if (key == KEY_DOWN)
 			move_down(&infos);
+		ft_add_number(&infos);
 		// to code ft_printgrid();
 		// to code if (stop_conditoon)
 		// 	break
