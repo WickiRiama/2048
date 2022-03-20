@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 12:12:08 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 15:42:39 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static void	init_ncurses()
 	initscr();
 	cbreak();
 	noecho();
-	curs_set(0);
-	keypad(stdscr, 1);
+	// curs_set(0);
 }
 
 static int init_infos(t_infos *infos)
@@ -104,7 +103,6 @@ int	main(void)
 	if (init_infos(&infos))
 		return (1);
 
-
 	/*
 	 * Initialize grids and draw
 	 */
@@ -115,21 +113,20 @@ int	main(void)
 	while (1)
 	{
 		key = wgetch(infos.boxes[0][0]);
-		/*if (key == KEY_LEFT)
-			move_left(&infos);
+		if (key == KEY_LEFT)
+			ft_move_l(&infos);
 		else if (key == KEY_RIGHT)
-			move_right(&infos);
+			ft_move_r(&infos);
 		else if (key == KEY_UP)
-			move_up(&infos);
+			ft_move_u(&infos);
 		else if (key == KEY_DOWN)
-			move_down(&infos);
+			ft_move_d(&infos);
 		else
-			continue ;*/
+			continue ;
 		add_number(&infos);
 
 		draw_numbers(&infos);
 		refresh_grid(&infos);
-		// to code ft_printgrid();
 		// to code if (stop_conditoon)
 		// 	break
 	}

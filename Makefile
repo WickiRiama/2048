@@ -6,7 +6,7 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 11:39:02 by mriant            #+#    #+#              #
-#    Updated: 2022/03/20 06:15:03 by dolee            ###   ########.fr        #
+#    Updated: 2022/03/20 15:41:47 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,10 @@ NAME = 2048
 RAW_SRCS = main.c \
 		   menu.c \
 		   add_number.c \
-		   move/left.c \
-		   move/right.c \
-		   move/down.c \
-		   move/up.c \
+		   move/left2.c \
+		   move/right2.c \
+		   move/down2.c \
+		   move/up2.c \
 		   graphics/draw_numbers.c \
 		   graphics/init_grid.c 
 
@@ -59,7 +59,8 @@ fclean: clean
 	make -s -C libft fclean
 
 re: fclean all
-
+test:	all
+		./2048
 .PHONY: all clean fclean re
 
 -include ${DEPS}

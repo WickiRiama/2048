@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 04:45:55 by dolee             #+#    #+#             */
-/*   Updated: 2022/03/20 11:30:03 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 14:41:32 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ void	draw_numbers(t_infos *infos)
 						infos->box_width / 2,
 						"%d\n",
 						infos->grid[i][j]);
+				box(infos->boxes[i][j], 0, 0);
+			}
+			else
+			{
+				wclear(infos->boxes[i][j]);
 				box(infos->boxes[i][j], 0, 0);
 			}
 			j++;

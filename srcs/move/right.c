@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   right.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dolee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:13:44 by dolee             #+#    #+#             */
-/*   Updated: 2022/03/20 06:13:29 by dolee            ###   ########.fr       */
+/*   Updated: 2022/03/20 13:57:47 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void move_right(t_infos *infos)
 		{
 			index = size - j - 1;
 			current_num = grid[i][index];
-			if (!current_num)
+			if (current_num)
 			{
 				if (current_num == temp_num)
 				{
