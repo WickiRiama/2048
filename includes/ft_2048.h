@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:45:02 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 17:07:04 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 23:04:17 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 enum e_const
 {
-	WIN_VALUE = 2048
+	WIN_VALUE = 32
 };
 
 typedef struct	s_infos
@@ -34,13 +34,13 @@ int		add_number(t_infos *infos);
 int	ft_menu(t_infos *infos);
 int		init_grid(t_infos *infos);
 void	draw_numbers(t_infos *infos);
-void	move_left(t_infos *infos);
-void	move_right(t_infos *infos);
-void	move_up(t_infos *infos);
-void	move_down(t_infos *infos);
-void	ft_move_d(t_infos *infos);
-void	ft_move_u(t_infos *infos);
-void	ft_move_r(t_infos *infos);
-void	ft_move_l(t_infos *infos);
+
+int		move_down(t_infos *infos);
+int		move_up(t_infos *infos);
+int		move_left(t_infos *infos);
+int		move_right(t_infos *infos);
+
+int		check_gameover(t_infos *infos);
+
 
 #endif

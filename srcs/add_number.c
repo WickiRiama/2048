@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 17:29:11 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 12:23:25 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 22:00:05 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include <time.h>
 #include "libft.h"
 #include "ft_2048.h"
-
-/*
- * return 0 when success
- * return 1 when the grid is full
- */
 
 int	ft_count_empty(t_infos *infos)
 {
@@ -42,6 +37,10 @@ int	ft_count_empty(t_infos *infos)
 	return (count_empty);
 }
 
+/*
+ * return 0 when success
+ * return 1 when the grid will be full
+ */
 int	add_number(t_infos *infos)
 {
 	int	i;
@@ -50,8 +49,6 @@ int	add_number(t_infos *infos)
 	int	rand_pos;
 
 	count_empty = ft_count_empty(infos);
-	if (count_empty == 0)
-		return (1);
 	rand_pos = rand() % count_empty;
 	i = 0;
 	while (i < infos->size && rand_pos > -1)
@@ -72,5 +69,8 @@ int	add_number(t_infos *infos)
 		}
 		i++;
 	}
-	return (0);
+	if (count_empty == 1)
+		return (1);
+	else
+		return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:13:44 by dolee             #+#    #+#             */
-/*   Updated: 2022/03/20 13:57:41 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 20:37:27 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_2048.h"
 
-void move_left(t_infos *infos)
+int		move_left(t_infos *infos)
 {
 	int		i;
 	int		j;
@@ -22,10 +22,12 @@ void move_left(t_infos *infos)
 	int		score;
 	int		size;
 	int		(*grid)[5];
+	int		cannot_move;
 
 	size = infos->size;
 	grid = infos->grid;
 
+	cannot_move = 1;
 	i = 0;
 	while (i < size)
 	{
@@ -48,6 +50,7 @@ void move_left(t_infos *infos)
 					temp_num = 0;
 					infos->score += score;
 					grid[i][j] = 0;
+					cannot_move = 0;
 				}
 				else
 				{
@@ -56,6 +59,7 @@ void move_left(t_infos *infos)
 					{
 						grid[i][temp_pos] = current_num;
 						grid[i][j] = 0;
+						cannot_move = 0;
 					}
 					temp_pos++;
 				}
@@ -64,4 +68,5 @@ void move_left(t_infos *infos)
 		}
 		i++;
 	}
+	return (cannot_move);
 }				

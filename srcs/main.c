@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 17:57:53 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 23:20:35 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,85 @@ void	ft_clean_win(t_infos *infos)
 	free(infos->boxes);
 }
 
+static WINDOW *draw_victory()
+{
+	WINDOW *window;
+
+	window = newwin(10, COLS, 0, 0);
+	if (!window)
+		return (NULL);
+	clear();
+	refresh();
+	if (keypad(window, TRUE))
+		return (NULL);
+	mvwprintw(window, 1, COLS / 2, "VICTORY\n");
+	box(window, 0, 0);
+	wrefresh(window);
+	return (window);
+}
+
+static int	victory()
+{
+	WINDOW *window;
+	int	key;
+
+	window = draw_victory();
+	key = wgetch(window);
+	while (1)
+	{
+		if (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_UP || key == KEY_DOWN)
+		{
+			delwin(window);
+			clear();
+			refresh();
+			return (0);
+		}
+		else if (key == KEY_RESIZE)
+		{
+			delwin(window);
+			clear();
+			refresh();
+			return (1);
+		}
+		else if (key == 27 || key == 3)
+		{
+			delwin(window);
+			clear();
+			refresh();
+			return (1);
+		}
+	}
+}
+
+static int	check_victory(t_infos *infos)
+{
+	static int already_victory = 0;
+	int		i;
+	int		j;
+
+	if (already_victory)
+		return (0);
+	i = 0;
+	while (i < infos->size)
+	{
+		j = 0;
+		while (j < infos->size)
+		{
+			if (infos->grid[i][j] == WIN_VALUE)
+			{
+				if (victory())
+					return (1);
+				already_victory = 1;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+
+
 #include <unistd.h>
 int	main(void)
 {
@@ -147,13 +226,25 @@ int	main(void)
 	{
 		key = wgetch(infos.boxes[0][0]);
 		if (key == KEY_LEFT)
-			ft_move_l(&infos);
+		{
+			if (move_left(&infos))
+				continue;
+		}
 		else if (key == KEY_RIGHT)
-			ft_move_r(&infos);
+		{
+			if (move_right(&infos))
+				continue ;
+		}
 		else if (key == KEY_UP)
-			ft_move_u(&infos);
+		{
+			if (move_up(&infos))
+				continue ;
+		}
 		else if (key == KEY_DOWN)
-			ft_move_d(&infos);
+		{
+			if (move_down(&infos))
+				continue ;
+		}
 		else if (key == KEY_RESIZE)
 		{
 			ft_clean_win(&infos);
@@ -165,14 +256,21 @@ int	main(void)
 		}
 		// 3 = CTRL+C and 27 = ESC
 		else if (key == 27 || key == 3)
-			break;
+			break ;
 		else
 			continue ;
-		add_number(&infos);
+		if (add_number(&infos))
+			if (check_gameover(&infos))
+			{
+				draw_numbers(&infos);
+				refresh_grid(&infos);
+				break;
+			}
 		draw_numbers(&infos);
 		refresh_grid(&infos);
-		// to code if (stop_conditoon)
-		// 	break
+		if (check_victory(&infos))
+			break ;
+
 	}
 	ft_clean_win(&infos);
 	free(infos.grid);

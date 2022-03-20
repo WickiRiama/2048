@@ -6,7 +6,7 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 11:39:02 by mriant            #+#    #+#              #
-#    Updated: 2022/03/20 15:41:47 by mriant           ###   ########.fr        #
+#    Updated: 2022/03/20 22:25:56 by dolee            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,12 @@ RAW_SRCS = main.c \
 		   move/down2.c \
 		   move/up2.c \
 		   graphics/draw_numbers.c \
-		   graphics/init_grid.c 
+		   graphics/init_grid.c \
+		   move/left.c \
+		   move/right.c \
+		   move/down.c \
+		   move/up.c \
+		   gameover_condition.c
 
 SRCS = ${addprefix srcs/, ${RAW_SRCS}}
 
@@ -29,7 +34,7 @@ OBJS = ${patsubst srcs/%.c, build/%.o, ${SRCS}}
 DEPS = ${patsubst srcs/%.c, build/%.d, ${SRCS}}
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 IFLAGS = -I./includes -I./libft -MMD
 LFLAGS = -lncurses -L./libft -lft
 
