@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 17:29:11 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 06:10:01 by dolee            ###   ########.fr       */
+/*   Updated: 2022/03/20 11:49:00 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ int	add_number(t_infos *infos)
 	int	j;
 	int	count_empty;
 	int	rand_pos;
-	int	*blanks[25];
 
 	count_empty = 0;
 	i = 0;
@@ -35,10 +34,7 @@ int	add_number(t_infos *infos)
 		while (j < infos->size)
 		{
 			if (infos->grid[i][j] == 0)
-			{
-				blanks[count_empty] = infos->grid[i] + j;
 				count_empty++;
-			}
 			j++;
 		}
 		i++;
@@ -46,6 +42,22 @@ int	add_number(t_infos *infos)
 	if (count_empty == 0)
 		return (1);
 	rand_pos = rand() % count_empty;
-		*blanks[rand_pos] = (rand() % 10 == 0) ? 4 : 2;
+	i = 0;
+	while (i < infos->size)
+	{
+		j = 0;
+		while (j < infos->size)
+		{
+			if (infos->grid[i][j] == 0)
+				rand_pos--;
+			if (rand_pos == 0 || rand_pos == -1)
+			{
+				infos->grid[i][j] = (rand() % 10 == 0) ? 4 : 2;
+				break;
+			}
+			j++;
+		}
+		i++;
+	}
 	return (0);
 }

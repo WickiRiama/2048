@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 09:02:22 by dolee            ###   ########.fr       */
+/*   Updated: 2022/03/20 11:54:14 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ static int init_infos(t_infos *infos)
 		return (1);
 	infos->score = 0;
 
-	i1 = rand() & infos->size;
-	j1 = rand() & infos->size;
+	i1 = rand() % infos->size;
+	j1 = rand() % infos->size;
 
-	i2 = rand() & infos->size;
-	j2 = rand() & infos->size;
+	i2 = rand() % infos->size;
+	j2 = rand() % infos->size;
 	while (i1 == i2 && j1 == j2)
 	{
-		j2 = rand() & infos->size;
-		j2 = rand() & infos->size;
+		j2 = rand() % infos->size;
+		j2 = rand() % infos->size;
 	}
 
 	infos->grid[i1][j1] = (rand() % 10 == 0) ? 4 : 2;
@@ -95,6 +95,7 @@ int	main(void)
 	 * t_infos.size will be initialized here
 	 */
 	ft_menu(&infos);
+	refresh();
 
 	/*
 	 * Initialize t_infos.grid and t_infos.score
@@ -113,7 +114,8 @@ int	main(void)
 
 	while (1)
 	{
-		key = wgetch(infos.boxes[0][3]);
+		key = wgetch(infos.boxes[0][0]);
+		/*
 		if (key == KEY_LEFT)
 			move_left(&infos);
 		else if (key == KEY_RIGHT)
@@ -123,7 +125,7 @@ int	main(void)
 		else if (key == KEY_DOWN)
 			move_down(&infos);
 		else
-			continue ;
+			continue ;*/
 		add_number(&infos);
 
 		draw_numbers(&infos);
@@ -139,7 +141,7 @@ int	main(void)
 	{
 		j = 0;
 		{
-			//delwin(windows[i * infos.size + j]);
+			delwin(infos.boxes[i][j];
 			j++;
 		}
 		i++;

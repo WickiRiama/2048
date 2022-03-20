@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_grid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dolee <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 05:15:42 by dolee             #+#    #+#             */
-/*   Updated: 2022/03/20 09:00:43 by dolee            ###   ########.fr       */
+/*   Updated: 2022/03/20 11:38:39 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,18 @@ int	init_grid(t_infos *infos)
 			infos->boxes[i][j] = newwin(infos->box_height, infos->box_width, i * infos->box_height, j * infos->box_width);
 			box(infos->boxes[i][j], 0, 0);
 			if (infos->grid[i][j])
+			{
 				mvwprintw(infos->boxes[i][j],
 						infos->box_height / 2,
 						infos->box_width / 2,
 						"%d\n",
 						infos->grid[i][j]);
+				box(infos->boxes[i][j], 0, 0);
+			}
 			j++;
 		}
 		i++;
 	}
+	keypad(infos->boxes[0][0], TRUE);
 	return (0);
 }
