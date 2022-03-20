@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 15:42:39 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 16:46:06 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	init_ncurses()
 	initscr();
 	cbreak();
 	noecho();
+	nodelay(stdscr, TRUE);
 	// curs_set(0);
 }
 
@@ -70,12 +71,28 @@ static void refresh_grid(t_infos *infos)
 	}
 }
 
+void	ft_clean_win(t_infos *infos)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < infos->size)
+	{
+		j = 0;
+		{
+			delwin(infos->boxes[i][j]);
+			j++;
+		}
+		i++;
+	}
+	free(infos->boxes);
+}
+
 #include <unistd.h>
 int	main(void)
 {
 	t_infos	infos;
-	int		i;
-	int		j;
 	int		key;
 
 
@@ -121,10 +138,18 @@ int	main(void)
 			ft_move_u(&infos);
 		else if (key == KEY_DOWN)
 			ft_move_d(&infos);
+		else if (key == KEY_RESIZE)
+		{
+			ft_clean_win(&infos);
+			clear();
+			refresh();
+			init_grid(&infos);
+			refresh_grid(&infos);
+			continue;
+		}
 		else
 			continue ;
 		add_number(&infos);
-
 		draw_numbers(&infos);
 		refresh_grid(&infos);
 		// to code if (stop_conditoon)
@@ -132,16 +157,6 @@ int	main(void)
 	}
 
 	//wgetch(windows[0]);
-	i = 0;
-	while (i < infos.size)
-	{
-		j = 0;
-		{
-			delwin(infos.boxes[i][j]);
-			j++;
-		}
-		i++;
-	}
-
+	ft_clean_win(&infos);
 	endwin();
 }
