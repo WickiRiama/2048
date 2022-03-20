@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 17:57:53 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 18:58:22 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,29 @@
 #include "libft.h"
 #include "ft_2048.h"
 
+int	ft_check_power2(int value)
+{
+	if (value < 0)
+		return (0);
+	while (value / 2 > 1)
+		value = value / 2;
+	if (value == 1)
+		return (0);
+	else
+		return (1);
+}
 
 static int	init_ncurses()
 {
-	if (!initscr() || cbreak() || noecho() || nodelay(stdscr, TRUE))
+	if (!initscr())
 		return (1);
+	if (cbreak() || noecho() || nodelay(stdscr, TRUE))
+	{
+		endwin();
+		return (1);
+	}
+	curs_set(0);
 	return (0);
-	// curs_set(0);
 }
 
 static int init_infos(t_infos *infos)
@@ -97,13 +113,14 @@ int	main(void)
 {
 	t_infos	infos;
 	int		key;
-
+	int		vict_condition;
 
 	/*
 	 * Set seed for random number
 	 */
 	srand(time(NULL));
 
+	vict_condition = ft_check_power2(WIN_VALUE);
 	/*
 	 * Initialize ncurses screen and set configurations
 	 */
@@ -168,6 +185,8 @@ int	main(void)
 			break;
 		else
 			continue ;
+		if (ft_isend(&infos))
+			break;
 		add_number(&infos);
 		draw_numbers(&infos);
 		refresh_grid(&infos);

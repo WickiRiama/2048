@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:45:02 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 17:07:04 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 19:01:39 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ void	ft_move_d(t_infos *infos);
 void	ft_move_u(t_infos *infos);
 void	ft_move_r(t_infos *infos);
 void	ft_move_l(t_infos *infos);
+int		ft_iswin(t_infos *infos, int vict_condition);
+int		ft_isend(t_infos *infos);
 
 #endif

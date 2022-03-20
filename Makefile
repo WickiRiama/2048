@@ -6,7 +6,7 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 11:39:02 by mriant            #+#    #+#              #
-#    Updated: 2022/03/20 15:41:47 by mriant           ###   ########.fr        #
+#    Updated: 2022/03/20 18:52:18 by mriant           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = 2048
 RAW_SRCS = main.c \
 		   menu.c \
 		   add_number.c \
+		   end_game.c \
 		   move/left2.c \
 		   move/right2.c \
 		   move/down2.c \
