@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 11:54:14 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 12:12:08 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ int	main(void)
 	while (1)
 	{
 		key = wgetch(infos.boxes[0][0]);
-		/*
-		if (key == KEY_LEFT)
+		/*if (key == KEY_LEFT)
 			move_left(&infos);
 		else if (key == KEY_RIGHT)
 			move_right(&infos);
@@ -141,7 +140,7 @@ int	main(void)
 	{
 		j = 0;
 		{
-			delwin(infos.boxes[i][j];
+			delwin(infos.boxes[i][j]);
 			j++;
 		}
 		i++;
