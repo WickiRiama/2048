@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 11:45:02 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 15:36:56 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:07:04 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_infos
 }				t_infos;
 
 int		add_number(t_infos *infos);
-void	ft_menu(t_infos *infos);
+int	ft_menu(t_infos *infos);
 int		init_grid(t_infos *infos);
 void	draw_numbers(t_infos *infos);
 void	move_left(t_infos *infos);

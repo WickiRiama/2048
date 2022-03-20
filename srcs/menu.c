@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:13:59 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 15:57:00 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:32:15 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@ static WINDOW	*draw_menu()
 	WINDOW	*window;
 
 	window = newwin(LINES, COLS, 0, 0);
+	if (!window)
+		return (NULL);
 	clear();
 	refresh();
-	keypad(window, TRUE);
+	if (keypad(window, TRUE))
+		return (NULL);
 	mvwprintw(window, 1, COLS / 2, "2048\n");
 	mvwprintw(window, 2, 1,
 			"Welcome.\n"
@@ -31,7 +34,7 @@ static WINDOW	*draw_menu()
 	return (window);
 }
 
-static void	get_key_input(t_infos *infos, WINDOW *window)
+static WINDOW	*get_key_input(t_infos *infos, WINDOW *window)
 {
 	int		key;
 
@@ -41,27 +44,43 @@ static void	get_key_input(t_infos *infos, WINDOW *window)
 		if (key == KEY_LEFT)
 		{
 			infos->size = 4;
-			return ;
+			return (window);
 		}
 		else if (key == KEY_RIGHT)
 		{
 			infos->size = 5;
-			return ;
+			return (window);
 		}
-
+		else if (key == KEY_RESIZE)
+		{
+			delwin(window);
+			clear();
+			refresh();
+			window = draw_menu();
+			continue;
+		}
+		// 3 = CTRL+C and 27 = ESC
+		else if (key == 27 || key == 3)
+		{
+			delwin(window);
+			return (NULL);
+		}
 	}
 }
 
-void	ft_menu(t_infos *infos)
+int	ft_menu(t_infos *infos)
 {
 	WINDOW	*window;
 
 	clear();
 	refresh();
 	window = draw_menu();
-	get_key_input(infos, window);
+	window = get_key_input(infos, window);
+	if (!window)
+		return (1);
 	wclear(window);
 	delwin(window);
 	clear();
 	refresh();
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/20 05:15:42 by dolee             #+#    #+#             */
-/*   Updated: 2022/03/20 11:38:39 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:51:10 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	init_grid(t_infos *infos)
 		while (j < infos->size)
 		{
 			infos->boxes[i][j] = newwin(infos->box_height, infos->box_width, i * infos->box_height, j * infos->box_width);
+			if (!infos->boxes[i][j])
+				return (1);
 			box(infos->boxes[i][j], 0, 0);
 			if (infos->grid[i][j])
 			{
@@ -43,6 +45,7 @@ int	init_grid(t_infos *infos)
 		}
 		i++;
 	}
-	keypad(infos->boxes[0][0], TRUE);
+	if (keypad(infos->boxes[0][0], TRUE))
+		return (1);
 	return (0);
 }

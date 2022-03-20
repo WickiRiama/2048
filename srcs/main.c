@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/20 16:46:06 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 17:57:53 by mriant           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,11 @@
 #include "ft_2048.h"
 
 
-static void	init_ncurses()
+static int	init_ncurses()
 {
-	initscr();
-	cbreak();
-	noecho();
-	nodelay(stdscr, TRUE);
+	if (!initscr() || cbreak() || noecho() || nodelay(stdscr, TRUE))
+		return (1);
+	return (0);
 	// curs_set(0);
 }
 
@@ -32,7 +31,7 @@ static int init_infos(t_infos *infos)
 	int		i2;
 	int		j2;
 
-	if (!(infos->grid = calloc(25, sizeof(int))))
+	if (!(infos->grid = ft_calloc(25, sizeof(int))))
 		return (1);
 	infos->score = 0;
 
@@ -77,13 +76,17 @@ void	ft_clean_win(t_infos *infos)
 	int	j;
 
 	i = 0;
-	while (i < infos->size)
+	j = 0;
+	while (i < infos->size && infos->boxes)
 	{
 		j = 0;
+		while (j < infos->size && infos->boxes[i][j])
 		{
 			delwin(infos->boxes[i][j]);
 			j++;
 		}
+		if (j < infos->size)
+			break;
 		i++;
 	}
 	free(infos->boxes);
@@ -104,13 +107,18 @@ int	main(void)
 	/*
 	 * Initialize ncurses screen and set configurations
 	 */
-	init_ncurses();
+	if (init_ncurses())
+		return (1);
 
 	/*
 	 * Menu window
 	 * t_infos.size will be initialized here
 	 */
-	ft_menu(&infos);
+	if(ft_menu(&infos))
+	{
+		endwin();
+		return (0);
+	}
 	refresh();
 
 	/*
@@ -118,13 +126,21 @@ int	main(void)
 	 * t_infos.size has been set on ft_menu
 	 */
 	if (init_infos(&infos))
+	{
+		endwin();
 		return (1);
+	}
 
 	/*
 	 * Initialize grids and draw
 	 */
 	if (init_grid(&infos))
+	{
+		ft_clean_win(&infos);
+		free(infos.grid);
+		endwin();
 		return (1);
+	}
 	refresh_grid(&infos);
 
 	while (1)
@@ -147,6 +163,9 @@ int	main(void)
 			refresh_grid(&infos);
 			continue;
 		}
+		// 3 = CTRL+C and 27 = ESC
+		else if (key == 27 || key == 3)
+			break;
 		else
 			continue ;
 		add_number(&infos);
@@ -155,8 +174,8 @@ int	main(void)
 		// to code if (stop_conditoon)
 		// 	break
 	}
-
-	//wgetch(windows[0]);
 	ft_clean_win(&infos);
+	free(infos.grid);
 	endwin();
+	return (0);
 }
