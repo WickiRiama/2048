@@ -6,7 +6,7 @@
 /*   By: mriant <mriant@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:15:54 by mriant            #+#    #+#             */
-/*   Updated: 2022/03/19 18:58:38 by mriant           ###   ########.fr       */
+/*   Updated: 2022/03/20 09:02:22 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,38 +15,105 @@
 #include "libft.h"
 #include "ft_2048.h"
 
-int	main(void)
+
+static void	init_ncurses()
 {
-	void	**windows;
-	t_infos	infos;
-	int		i;
-	int		j;
-	
-	srand(time(NULL));
 	initscr();
 	cbreak();
 	noecho();
-	/*
-	 * Initialize t_infos
-	 */
-	 /* MALLOC PROTECTION !!!!!*/
-	infos.size = ft_menu(LINES, COLS);
-	infos.grid = malloc(sizeof(int *) * infos.size);
-	i = 0;
-	while (i < infos.size)
+	curs_set(0);
+	keypad(stdscr, 1);
+}
+
+static int init_infos(t_infos *infos)
+{
+	int		i1;
+	int		j1;
+	int		i2;
+	int		j2;
+
+	if (!(infos->grid = calloc(25, sizeof(int))))
+		return (1);
+	infos->score = 0;
+
+	i1 = rand() & infos->size;
+	j1 = rand() & infos->size;
+
+	i2 = rand() & infos->size;
+	j2 = rand() & infos->size;
+	while (i1 == i2 && j1 == j2)
 	{
-		infos.grid[i] = ft_calloc(sizeof(int), infos.size);
+		j2 = rand() & infos->size;
+		j2 = rand() & infos->size;
+	}
+
+	infos->grid[i1][j1] = (rand() % 10 == 0) ? 4 : 2;
+	infos->grid[i2][j2] = (rand() % 10 == 0) ? 4 : 2;
+
+	return (0);
+}
+
+static void refresh_grid(t_infos *infos)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (i < infos->size)
+	{
+		j = 0;
+		while ( j < infos->size)
+		{
+			wrefresh(infos->boxes[i][j]);
+			j++;
+		}
 		i++;
 	}
-	infos.score = 0;
-	ft_add_number(&infos);
-	ft_add_number(&infos);
-	clear();
-	refresh();
-	windows = ft_initgrid(infos);
+}
+
+#include <unistd.h>
+int	main(void)
+{
+	t_infos	infos;
+	int		i;
+	int		j;
+	int		key;
+
+
+	/*
+	 * Set seed for random number
+	 */
+	srand(time(NULL));
+
+	/*
+	 * Initialize ncurses screen and set configurations
+	 */
+	init_ncurses();
+
+	/*
+	 * Menu window
+	 * t_infos.size will be initialized here
+	 */
+	ft_menu(&infos);
+
+	/*
+	 * Initialize t_infos.grid and t_infos.score
+	 * t_infos.size has been set on ft_menu
+	 */
+	if (init_infos(&infos))
+		return (1);
+
+
+	/*
+	 * Initialize grids and draw
+	 */
+	if (init_grid(&infos))
+		return (1);
+	refresh_grid(&infos);
+
 	while (1)
 	{
-		key = wgetch(window[0]);
+		key = wgetch(infos.boxes[0][3]);
 		if (key == KEY_LEFT)
 			move_left(&infos);
 		else if (key == KEY_RIGHT)
@@ -55,23 +122,28 @@ int	main(void)
 			move_up(&infos);
 		else if (key == KEY_DOWN)
 			move_down(&infos);
-		ft_add_number(&infos);
+		else
+			continue ;
+		add_number(&infos);
+
+		draw_numbers(&infos);
+		refresh_grid(&infos);
 		// to code ft_printgrid();
 		// to code if (stop_conditoon)
 		// 	break
 	}
-	wgetch(windows[0]);
+
+	//wgetch(windows[0]);
 	i = 0;
 	while (i < infos.size)
 	{
 		j = 0;
 		{
-			delwin(windows[i * infos.size + j]);
+			//delwin(windows[i * infos.size + j]);
 			j++;
 		}
 		i++;
 	}
 
-	free (windows);
 	endwin();
 }

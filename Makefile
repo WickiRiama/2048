@@ -6,16 +6,23 @@
 #    By: mriant <mriant@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/19 11:39:02 by mriant            #+#    #+#              #
-#    Updated: 2022/03/19 17:57:47 by mriant           ###   ########.fr        #
+#    Updated: 2022/03/20 06:15:03 by dolee            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 2048
 
-SRCS = ${addprefix srcs/, \
-	main.c \
-	menu.c \
-	random.c}
+RAW_SRCS = main.c \
+		   menu.c \
+		   add_number.c \
+		   move/left.c \
+		   move/right.c \
+		   move/down.c \
+		   move/up.c \
+		   graphics/draw_numbers.c \
+		   graphics/init_grid.c 
+
+SRCS = ${addprefix srcs/, ${RAW_SRCS}}
 
 OBJS = ${patsubst srcs/%.c, build/%.o, ${SRCS}}
 
@@ -35,7 +42,8 @@ ${LIBFT}:
 	make -s -C libft
 
 build/%.o: srcs/%.c
-	@mkdir -p build
+	@mkdir -p build/move
+	@mkdir -p build/graphics
 	${CC} ${CFLAGS} -c $< -o $@ ${IFLAGS}
 
 all: ${NAME}

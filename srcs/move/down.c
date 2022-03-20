@@ -6,7 +6,7 @@
 /*   By: dolee <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/19 14:13:44 by dolee             #+#    #+#             */
-/*   Updated: 2022/03/19 16:45:08 by dolee            ###   ########.fr       */
+/*   Updated: 2022/03/20 06:13:48 by dolee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ void move_down(t_infos *infos)
 	int		current_num;
 	int		score;
 	int		size;
-	int		**grid;
+	int		(*grid)[5];
 
 	size = infos->size;
 	grid = infos->grid;
 
-	i = 0
+	i = 0;
 	while (i < size)
 	{
 		temp_num = grid[0][i];
